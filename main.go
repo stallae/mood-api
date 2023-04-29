@@ -34,8 +34,9 @@ func init() {
 
     // Configure CORS
     config := cors.DefaultConfig()
-    config.AllowOrigins = []string{"https://www.worldmoodtoday.com"}
-    config.AllowMethods = []string{"GET", "POST", "OPTIONS"}
+    config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"https://www.worldmoodtoday.com", "https://dev.worldmoodtoday.com","http://localhost:3000"}
+	config.AllowMethods = []string{"GET", "POST", "OPTIONS"}
     g.Use(cors.New(config))
 
     // Create Gin Lambda instance
