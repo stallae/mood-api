@@ -13,14 +13,28 @@ import (
 
 var ginLambda *ginadapter.GinLambda
 
+const (
+	healthPath = "/api/health"
+	moodPath   = "/api/mood"
+)
+
 func init() {
 	g := gin.Default()
-	g.GET("/api/health", func(c *gin.Context) {
+
+	// Define health route
+	g.GET(healthPath, func(c *gin.Context) {
 		handlers.PingHandler(c.Writer, c.Request)
 	})
-	g.POST("/api/mood", func(c *gin.Context) {
+
+	// Define mood routes
+	g.POST(moodPath, func(c *gin.Context) {
 		handlers.MoodHandler(c.Writer, c.Request)
 	})
+	g.GET(moodPath, func(c *gin.Context) {
+		handlers.MoodHandler(c.Writer, c.Request)
+	})
+
+	// Create Gin Lambda instance
 	ginLambda = ginadapter.New(g)
 }
 
