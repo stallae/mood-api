@@ -20,7 +20,7 @@ jobs:
     - name: Build binary
       run: |
         go get -u github.com/aws/aws-lambda-go/lambda
-        GOOS=linux go build -o main main.go
+        GOOS=linux go build -o bootstrap main.go
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -31,5 +31,5 @@ jobs:
 
     - name: Package and deploy
       run : |
-        zip main.zip main
-        aws lambda update-function-code --function-name ${{ secrets.AWS_FUNCTION_NAME }} --zip-file fileb://main.zip --region us-east-1
+        zip bootstrap.zip bootstrap
+        aws lambda update-function-code --function-name ${{ secrets.AWS_FUNCTION_NAME }} --zip-file fileb://bootstrap.zip --region us-east-1
