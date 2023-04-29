@@ -12,7 +12,7 @@ import (
 func main() {
 
 	r := mux.NewRouter()
-	r.HandleFunc("/api/ping", handlers.PingHandler)
+	r.HandleFunc("/api/health", handlers.PingHandler)
 	r.HandleFunc("/api/mood", handlers.MoodHandler)
 	http.Handle("/", r)
 
