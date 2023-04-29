@@ -20,7 +20,7 @@ jobs:
     - name: Build binary
       run: |
         go get -u github.com/aws/aws-lambda-go/lambda
-        GOOS=linux go build -o bootstrap main.go
+        GOOS=linux GOARCH=arm64 go build -o bootstrap main.go
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
