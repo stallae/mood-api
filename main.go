@@ -1,24 +1,34 @@
 package main
 
 import (
-	"log"
+	"context"
 	"net/http"
 
 	"mood-api/handlers"
 
-	"github.com/gorilla/mux"
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
+	ginadapter "github.com/awslabs/aws-lambda-go-api-proxy/gin"
+	"github.com/gin-gonic/gin"
 )
 
+var ginLambda *ginadapter.GinLambda
+
+func init() {
+	g := gin.Default()
+	g.GET("/api/health", func(c *gin.Context) {
+		handlers.PingHandler(c.Writer, c.Request)
+	})
+	g.POST("/api/mood", func(c *gin.Context) {
+		handlers.MoodHandler(c.Writer, c.Request)
+	})
+	ginLambda = ginadapter.New(g)
+}
+
 func main() {
+	lambda.Start(Handler)
+}
 
-	r := mux.NewRouter()
-	r.HandleFunc("/api/health", handlers.PingHandler)
-	r.HandleFunc("/api/mood", handlers.MoodHandler)
-	http.Handle("/", r)
-
-	log.Println("Listening on :8080")
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		log.Fatal("Error starting server: ", err)
-	}
+func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	return ginLambda.ProxyWithContext(ctx, request)
 }
