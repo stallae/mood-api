@@ -1,0 +1,1 @@
+aws dynamodb create-table --table-name MoodEntries --attribute-definitions AttributeName=MoodId,AttributeType=S AttributeName=Day,AttributeType=S --key-schema AttributeName=MoodId,KeyType=HASH AttributeName=Day,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --endpoint-url http://localhost:8000

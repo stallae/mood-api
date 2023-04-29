@@ -1,0 +1,15 @@
+# .air.toml
+[build]
+  cmd = "go build -o ./main ."
+  bin = "./main"
+  log = "build.log"
+
+[color]
+  main = "magenta"
+
+[log]
+  level = "info"
+
+[watch]
+  exts = [".go", ".tpl", ".tmpl", ".html"]
+  dirs = ["."]
