@@ -15,7 +15,7 @@ var ginLambda *ginadapter.GinLambda
 
 const (
 	healthPath = "/api/health"
-	moodPath   = "/api/mood"
+	moodPathV1   = "/api/v1/mood"
 )
 
 func init() {
@@ -26,11 +26,10 @@ func init() {
 		handlers.PingHandler(c.Writer, c.Request)
 	})
 
-	// Define mood routes
-	g.POST(moodPath, func(c *gin.Context) {
+	g.POST(moodPathV1, func(c *gin.Context) {
 		handlers.MoodHandler(c.Writer, c.Request)
 	})
-	g.GET(moodPath, func(c *gin.Context) {
+	g.GET(moodPathV1, func(c *gin.Context) {
 		handlers.MoodHandler(c.Writer, c.Request)
 	})
 
