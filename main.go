@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"net/http"
 
 	"mood-api/handlers"
 
