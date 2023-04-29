@@ -2,7 +2,6 @@ package store
 
 import (
 	"log"
-	"os"
 	"strconv"
 	"time"
 
@@ -27,16 +26,11 @@ type MoodDetails struct {
 const entriesTableName = "MoodEntries"
 
 func createDynamoDBClient() *dynamodb.DynamoDB {
-	region := os.Getenv("AWS_REGION")
-	endpoint := os.Getenv("DYNAMODB_ENDPOINT")
+	region := "us-east-1" // Set the region directly
 
 	awsConfig := &aws.Config{
 		Region: aws.String(region),
 		//Credentials: credentials.NewStaticCredentials("fakeAccessKeyId", "fakeSecretAccessKey", ""),
-	}
-
-	if endpoint != "" {
-		awsConfig.Endpoint = aws.String(endpoint)
 	}
 
 	sess := session.Must(session.NewSession(awsConfig))
