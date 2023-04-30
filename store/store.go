@@ -44,8 +44,12 @@ func CalculateMoodDetailsForDate(date string) MoodDetails {
 	dynamoDBClient := createDynamoDBClient()
 	log.Printf("Input date: %s", date)
 
-	// Get the Unix timestamp for the start and end of the current day
-	startOfDay := int(time.Now().UTC().Truncate(24 * time.Hour).Unix())
+	loc, err := time.LoadLocation("America/Sao_Paulo")
+	if err != nil {
+		// lida com o erro
+	}
+	
+	startOfDay := int(time.Now().In(loc).Truncate(24 * time.Hour).Unix())
 	endOfDay := startOfDay + 24*60*60 - 1
 
 	input := &dynamodb.QueryInput{
@@ -118,11 +122,15 @@ func CalculateMoodDetailsForDate(date string) MoodDetails {
 
 func SaveMoodData(mood string) {
 	dynamoDBClient := createDynamoDBClient()
-
+	loc, err := time.LoadLocation("America/Sao_Paulo")
+	if err != nil {
+		// lida com o erro
+	}
+	
 	moodEntry := MoodEntry{
-		Day:          int(time.Now().Unix()),
+		Day:          int(time.Now().In(loc).Unix()),
 		Mood:         mood,
-		PartitionKey: "mood_entry", // Add this line
+		PartitionKey: "mood_entry",
 	}
 	av, err := dynamodbattribute.MarshalMap(moodEntry)
 	if err != nil {
