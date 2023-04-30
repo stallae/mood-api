@@ -34,7 +34,7 @@ func init() {
 
     // Configure CORS
     config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"https://www.worldmoodtoday.com", "https://dev.worldmoodtoday.com","http://localhost:3000"}
+	config.AllowOrigins = []string{"https://www.worldmoodtoday.com", "https://develop.worldmoodtoday.com","http://localhost:3000"}
 	config.AllowMethods = []string{"GET", "POST", "OPTIONS"}
     g.Use(cors.New(config))
 
